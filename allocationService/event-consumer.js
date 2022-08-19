@@ -17,7 +17,7 @@ const eventListner = async () => {
     await consumer
         .subscribe({
             topic: process.env.LISTEN_TOPIC || 'error',
-            fromBeginning: true,
+            fromBeginning: false,
         })
         .catch((e) => logger.error(e));
 
@@ -60,9 +60,9 @@ const eventListner = async () => {
             await eventProducer(process.env.RESPOND_TOPIC || 'error', {
                 from: process.env.SERVICE_NAME,
                 type: 'NEW_ORDER_RESPONSE',
-                // key: newMessage.NIC,
+                key: newMessage.key,
                 uniqueKey: newMessage.uniqueKey,
-                // amount: newMessage.amount,
+                amount: newMessage.amount,
                 result: 'success'
             })
             .catch((e) => {

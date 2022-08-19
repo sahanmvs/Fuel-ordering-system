@@ -18,14 +18,14 @@ public class Consumer {
 
         if(event.getType().equals("ALLOCATION_COMPLETE")) {
             System.out.println("scheduling a date");
-//            producer.publishToTopic(new Event(
-//                    "schedule-service",
-//                    "SCHEDULE_COMPLETE",
-//                    event.getKey(),
-//                    event.getUniqueKey(),
-//                    event.getAmount(),
-//                    "schedule success"
-//                    ));
+            producer.publishToTopic(new Event(
+                    "schedule-service",
+                    "SCHEDULE_COMPLETE",
+                    event.getKey(),
+                    event.getUniqueKey(),
+                    event.getAmount(),
+                    "schedule success"
+                    ));
         }else {
             System.out.println("Event is not related to allocation. process ignored");
         }

@@ -63,7 +63,7 @@ const eventListner = async () => {
                 key: newMessage.key,
                 uniqueKey: newMessage.uniqueKey,
                 amount: newMessage.amount,
-                result: 'success'
+                result: 'allocation success'
             })
             .catch((e) => {
                 throw new Error('error on publishing message', e);

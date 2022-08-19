@@ -1,4 +1,5 @@
 import { Kafka } from "kafkajs";
+import eventProducer from "./event-producer.js";
 import logger from "./logger/logger.js";
 import { Order } from "./models/order.js";
 
@@ -28,22 +29,36 @@ const eventListner = async () => {
 
                 const newMessage = JSON.parse(message.value.toString() || '{}');
     
-                if(!(newMessage?.type === 'NEW_ORDER_RESPONSE')) {
-                    logger.info(
-                        `incoming message is not NEW_ORDER_RESPONSE type. (${newMessage.type}) skipped the process`
-                    );
-                    return;
+                switch(newMessage.type) {
+                    case 'NEW_ORDER_RESPONSE':
+                    let order = await Order.findOne({ uniqueKey: newMessage.uniqueKey });
+                    if(!order) {
+                        return logger.info(`can't find a order with incoming ${newMessage?.uniqueKey}`);
+                    }
+        
+                    order.status = newMessage.result;
+                    await order.save();
+
+                    if(newMessage.result == 'allocation success') {
+                        await eventProducer(process.env.PRODUCE_TOPIC || 'error', {
+                            from: process.env.SERVICE_NAME,
+                            type: 'ALLOCATION_COMPLETE',
+                            key: newMessage.key,
+                            uniqueKey: newMessage.uniqueKey,
+                            amount: newMessage.amount,
+                            result: 'allocation success'
+                        })
+                        .catch((e) => {
+                            throw new Error('error on publishing message', e);
+                        });
+                        logger.debug('sent ALLOCATION_COMPLETE message');
+                    }
+                    break;
+
+                    //case 'SCHEDULE_COMPLETE':
                 }
     
-                //business logic
-                let order = await Order.findOne({ uniqueKey: newMessage.uniqueKey });
-                if(!order) {
-                    return logger.info(`can't find a order with incoming ${newMessage?.uniqueKey}`);
-                }
-    
-                //console.log(order);
-                order.status = newMessage.result;
-                await order.save();
+                
                 
                 await consumer.commitOffsets([
                     {

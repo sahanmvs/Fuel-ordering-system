@@ -55,7 +55,12 @@ const eventListner = async () => {
                     }
                     break;
 
-                    //case 'SCHEDULE_COMPLETE':
+                    case 'SCHEDULE_COMPLETE':
+                        console.log('schedule done');
+                    break;
+
+                    default:
+                    break;
                 }
     
                 

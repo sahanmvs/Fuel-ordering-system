@@ -31,39 +31,45 @@ const eventListner = async () => {
     
                 switch(newMessage.type) {
                     case 'NEW_ORDER_RESPONSE':
-                    let order = await Order.findOne({ uniqueKey: newMessage.uniqueKey });
-                    if(!order) {
-                        return logger.info(`can't find a order with incoming ${newMessage?.uniqueKey}`);
-                    }
-        
-                    order.status = newMessage.result;
-                    await order.save();
+                        let order = await Order.findOne({ uniqueKey: newMessage.uniqueKey });
+                        if(!order) {
+                            return logger.info(`can't find a order with incoming ${newMessage?.uniqueKey}`);
+                        }
+            
+                        order.status = newMessage.result;
+                        await order.save();
 
-                    if(newMessage.result == 'allocation success') {
-                        await eventProducer(process.env.PRODUCE_TOPIC || 'error', {
-                            from: process.env.SERVICE_NAME,
-                            type: 'ALLOCATION_COMPLETE',
-                            key: newMessage.key,
-                            uniqueKey: newMessage.uniqueKey,
-                            amount: newMessage.amount,
-                            result: 'allocation success'
-                        })
-                        .catch((e) => {
-                            throw new Error('error on publishing message', e);
-                        });
-                        logger.debug('sent ALLOCATION_COMPLETE message');
-                    }
-                    break;
+                        if(newMessage.result == 'allocation success') {
+                            await eventProducer(process.env.PRODUCE_TOPIC || 'error', {
+                                from: process.env.SERVICE_NAME,
+                                type: 'ALLOCATION_COMPLETE',
+                                key: newMessage.key,
+                                uniqueKey: newMessage.uniqueKey,
+                                amount: newMessage.amount,
+                                result: 'allocation success'
+                            })
+                            .catch((e) => {
+                                throw new Error('error on publishing message', e);
+                            });
+                            logger.debug('sent ALLOCATION_COMPLETE message');
+                        }
+                        break;
 
                     case 'SCHEDULE_COMPLETE':
-                        console.log('schedule done');
-                    break;
+                        logger.debug('schedule completed');
+                        let ord = await Order.findOne({ uniqueKey: newMessage.uniqueKey });
+                        if(!ord) {
+                            return logger.info(`can't find a order with incoming ${newMessage?.uniqueKey}`);
+                        }
+            
+                        ord.status = newMessage.result;
+                        await ord.save();
+                        break;
 
                     default:
-                    break;
+                        break;
                 }
     
-                
                 
                 await consumer.commitOffsets([
                     {

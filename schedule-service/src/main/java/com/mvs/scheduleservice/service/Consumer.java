@@ -18,6 +18,9 @@ public class Consumer {
     @Autowired
     private ScheduleRepository scheduleRepository;
 
+    @Autowired
+    private RandomDate randomDate;
+
     @KafkaListener(topics = "new-order", groupId = "schedule-group")
     public void readFromTopic(String message) throws InterruptedException{
         System.out.println("Incoming message is " + message);
@@ -25,6 +28,17 @@ public class Consumer {
 
         if(event.getType().equals("ALLOCATION_COMPLETE")) {
             System.out.println("scheduling a date");
+
+            Schedule schedule = new Schedule(
+                    event.getKey(),
+                    event.getUniqueKey(),
+                    event.getAmount(),
+                    "schedule complete",
+                    randomDate.generateDate()
+            );
+            scheduleRepository.save(schedule);
+            System.out.println(schedule);
+
             producer.publishToTopic(new Event(
                     "schedule-service",
                     "SCHEDULE_COMPLETE",
@@ -32,17 +46,7 @@ public class Consumer {
                     event.getUniqueKey(),
                     event.getAmount(),
                     "schedule success"
-                    ));
-
-            Schedule schedule = new Schedule(
-                    event.getKey(),
-                    event.getUniqueKey(),
-                    event.getAmount(),
-                    "schedule complete",
-                    LocalDate.now()
-            );
-            scheduleRepository.save(schedule);
-            System.out.println(schedule);
+            ));
         }else {
             System.out.println("Event is not related to allocation. process ignored");
         }

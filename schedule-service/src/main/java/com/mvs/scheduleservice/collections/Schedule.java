@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Data
 @Builder
 @AllArgsConstructor
-@Document(collation = "schedules")
+@Document(collection = "schedule")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Schedule {
     private String key;

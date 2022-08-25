@@ -4,6 +4,7 @@ import logger from './logger/logger.js';
 import { Order, validate, createOrder } from './models/order.js';
 import mongoose from 'mongoose';
 import eventListner from './event-consumer.js';
+import cors from 'cors'
 dotenv.config();
 
 const app = express();
@@ -14,9 +15,11 @@ mongoose.connect('mongodb://localhost/OrderService')
     .catch(err => console.log('Error connecting...', err));
 
 eventListner().catch((e) => error('error on subscribing to topic'));
+
+app.use(cors());    // forgot (), wasted a day :)
 app.use(json());
 
-app.post('/order', async (req, res) => {
+app.post('/orders', async (req, res) => {
     const { error } = validate(req.body);
     if(error) {
         logger.error(`invalid request. NIC: ${req.body.NIC} type: ${req.body.type}`);
@@ -37,6 +40,14 @@ app.post('/order', async (req, res) => {
     order = await order.save();
 
     res.status(200).send({id: uniqueKey});
+});
+
+app.get('/orders', async (req, res) => {
+    const orders = await Order
+                    .find()
+                    .select('-_id -__v');
+    res.send(orders);
+    logger.debug("Get all orders api called...");
 });
 
 app.listen(port, () => {

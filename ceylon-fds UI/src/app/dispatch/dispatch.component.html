@@ -6,28 +6,34 @@
         <div class="row">
             <div class="col-md-2">NIC Filter</div>
             <div class="col-md-4">
-                <input type="text" />
+                <input type="text" [(ngModel)] = "nicFilter"/>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
-                <h6>Filtered By: </h6>
+                <h6>Filtered By: {{nicFilter}} </h6>
             </div>
         </div>
         <div class="table-responsive">
-            <table class="table" >
+            <table class="table" *ngIf="dispatches.length">
                 <thead>
                     <tr>
                         <th>NIC</th>
                         <th>Unique Key</th>
                         <th>Amount(Litres)</th>
                         <th>Status</th>
-                        <th>Time</th>
+                        <th>Scheduled Date</th>
+                        <th>Dispatch</th>
                     </tr>
                 </thead>
-                <tbody >
+                <tbody *ngFor="let dispatch of filteredDispatches">
                     <tr>
-                        <td></td>
+                        <td>{{dispatch.key}}</td>
+                        <td>{{dispatch.uniqueKey}}</td>
+                        <td>{{dispatch.amount}}</td>
+                        <td>{{dispatch.result}}</td>
+                        <td>{{dispatch.scheduledDate}}</td>
+                        <td><a class="btn btn-success">Dispatch</a></td>
                     </tr>
                 </tbody>
             </table>

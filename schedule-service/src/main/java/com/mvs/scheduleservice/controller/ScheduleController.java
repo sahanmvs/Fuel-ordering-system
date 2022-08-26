@@ -3,12 +3,14 @@ package com.mvs.scheduleservice.controller;
 import com.mvs.scheduleservice.model.ScheduleModel;
 import com.mvs.scheduleservice.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/schedule/")
 public class ScheduleController {

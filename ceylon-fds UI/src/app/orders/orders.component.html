@@ -1,0 +1,41 @@
+<div class="card">
+    <div class="card-header">
+        <h5>FDS</h5> 
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-2">NIC Filter</div>
+            <div class="col-md-4">
+                <input type="text" [(ngModel)] = "filter"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h6>Filtered By: {{ filter }}</h6>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table" *ngIf="orders.length">
+                <thead>
+                    <tr>
+                        <th>NIC</th>
+                        <th>Unique Key</th>
+                        <th>Amount(Litres)</th>
+                        <th>Status</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody *ngFor="let order of filteredOrders">
+                    <tr>
+                        <td>{{order.NIC}}</td>
+                        <td>{{order.uniqueKey}}</td>
+                        <td>{{order.amount}}</td>
+                        <td>{{order.status}}</td>
+                        <td>{{order.time|date:"medium"}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

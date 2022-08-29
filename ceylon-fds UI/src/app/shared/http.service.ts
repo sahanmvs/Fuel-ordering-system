@@ -11,6 +11,7 @@ export class HttpService {
 
   private orderUrl: string = 'http://localhost:8191/orders';
   private scheduledOrderUrl: string = 'http://localhost:8192/schedule/orders';
+  private dispatchOrderUrl: string = 'http://localhost:8193/dispatches'
 
   constructor(private http: HttpClient) { 
 
@@ -22,6 +23,10 @@ export class HttpService {
 
   getAllDispatches(): Observable<Dispatch[]> {
     return this.http.get<Dispatch[]>(this.scheduledOrderUrl);
+  }
+
+  getDispatch(id: string): Observable<Dispatch> {
+    return this.http.get<Dispatch>(`${this.dispatchOrderUrl}/${id}`);
   }
 
 }

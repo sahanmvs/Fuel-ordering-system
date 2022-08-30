@@ -66,6 +66,17 @@ const eventListner = async () => {
                         await ord.save();
                         break;
 
+                        case 'FUEL_DISPATCHED':
+                            logger.debug('Dispatch completed');
+                            let dispatchedOrder = await Order.findOne({ uniqueKey: newMessage.uniqueKey });
+                            if(!dispatchedOrder) {
+                                return logger.info(`can't find a order with incoming ${newMessage?.uniqueKey}`);
+                            }
+                
+                            dispatchedOrder.status = newMessage.result;
+                            await dispatchedOrder.save();
+                            break;
+
                     default:
                         break;
                 }

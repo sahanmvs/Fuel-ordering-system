@@ -31,10 +31,10 @@ export class DispatchUpdateComponent implements OnInit {
     this.dispatchUpdate.getDispatch(id)
     .subscribe({
       next: data => {
-        // console.log(data) // array
+        // console.log(data) // array, could use findOne()
         this.dispatch = data;
 
-        for(let dispatch of this.dispatch) {
+        for(let dispatch of this.dispatch) {  
           this.dispatchOrder = new FormGroup({
                                   key: new FormControl(dispatch.NIC),
                                   uniqueKey: new FormControl(dispatch.uniqueKey),
@@ -46,7 +46,17 @@ export class DispatchUpdateComponent implements OnInit {
         }
       }
     })
-                      
+            
   }
+
+  
+  dispatchAnOrder() {
+      this.dispatchUpdate
+          .dispatchOrder(this.router.snapshot.params['id'], this.dispatch[0])
+          .subscribe((res) => {
+            window.location.href = 'dispatch';
+            window.alert('Order dipatched');
+          })
+  }     
 
 }

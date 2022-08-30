@@ -23,6 +23,7 @@
                         <th>Amount(Litres)</th>
                         <th>Status</th>
                         <th>Scheduled Date</th>
+                        <th>Dispatched Date</th>
                         <th>Dispatch</th>
                     </tr>
                 </thead>
@@ -33,6 +34,7 @@
                         <td>{{dispatch.amount}}</td>
                         <td>{{dispatch.status}}</td>
                         <td>{{dispatch.scheduledDate}}</td>
+                        <td>{{dispatch.time || 'n/a'}}</td>
                         <td><a class="btn btn-success" 
                              routerLink="/dispatch/{{dispatch.uniqueKey}}">Dispatch</a></td>
                     </tr>

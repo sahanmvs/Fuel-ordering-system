@@ -5,6 +5,7 @@ import cors from 'cors';
 import logger from './logger/logger.js';
 import Dispatch from './model/dispatch.js';
 import eventListner from './event-consumer.js';
+import eventProducer from './event-producer.js';
 dotenv.config();
 
 const app = express();
@@ -40,7 +41,36 @@ app.get('/dispatches', async (req, res) => {
     if(!dispatches) return res.status(404).send(`can't find dispatches`);
     res.send(dispatches);
     logger.debug("List dispatches api called...");
-})
+});
+
+app.put('/dispatches/:id', async (req, res) => {
+    let dispatch = await Dispatch.findOne({uniqueKey: req.params.id});
+    if(!dispatch) return res.status(404).send(`can't find a dipatch with id: ${req.params.id}`);
+
+    await eventProducer('new-order-response' || 'error', {
+        from: process.env.SERVICE_NAME,
+        type: 'FUEL_DISPATCHED',
+        key: req.body.NIC,
+        uniqueKey: req.body.uniqueKey,
+        amount: req.body.amount,
+        result: 'fuel dispatch complete',
+    })
+    .catch((e) => {
+        throw new Error('error on publishing message', e);
+    });
+    logger.debug('sent FUEL_DISPATCHED message');
+
+    dispatch.set({
+        NIC: req.body.NIC,
+        amount: req.body.amount,
+        uniqueKey: req.body.uniqueKey,
+        status: 'dispatched',
+        scheduledDate: req.body.scheduledDate,
+        time: Date.now()
+    })
+    dispatch = await dispatch.save()
+    res.send(dispatch);
+});
 
 app.listen(port, () => {
     logger.info(`Order service running on port ${port}`);

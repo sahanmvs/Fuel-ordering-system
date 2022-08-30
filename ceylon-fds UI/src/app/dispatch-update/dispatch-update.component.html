@@ -4,7 +4,7 @@
     </div>
 
     <div class="card-body">
-        <form [formGroup]="dispatchOrder">
+        <form [formGroup]="dispatchOrder" (ngSubmit)="dispatchAnOrder()">
             <div class="form-group row">
               <label class="col-sm-2 col-form-label">NIC</label>
               <div class="col-sm-10">

@@ -18,7 +18,8 @@ export class DispatchUpdateComponent implements OnInit {
     uniqueKey: new FormControl(''),
     amount: new FormControl(),
     result: new FormControl(''),
-    scheduledDate: new FormControl('')
+    scheduledDate: new FormControl(''),
+    dispatchedDate: new FormControl('')
   });
 
   constructor(private router: ActivatedRoute, private dispatchUpdate: DispatchUpdateService) { }
@@ -39,7 +40,8 @@ export class DispatchUpdateComponent implements OnInit {
                                   uniqueKey: new FormControl(dispatch.uniqueKey),
                                   amount: new FormControl(dispatch.amount),
                                   result: new FormControl(dispatch.status),
-                                  scheduledDate: new FormControl(dispatch.time || '-')
+                                  scheduledDate: new FormControl(dispatch.scheduledDate),
+                                  dispatchedDate: new FormControl(dispatch.time)
                                 }) 
         }
       }

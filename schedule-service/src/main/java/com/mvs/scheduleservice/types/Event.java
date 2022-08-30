@@ -1,5 +1,7 @@
 package com.mvs.scheduleservice.types;
 
+import java.time.LocalDate;
+
 public class Event {
     private String from;
     private String type;
@@ -7,14 +9,16 @@ public class Event {
     private String uniqueKey;
     private Double amount;
     private String result;
+//    private LocalDate date;
 
-    public Event(String from, String type, String key, String uniqueKey, Double amount, String result) {
+    public Event(String from, String type, String key, String uniqueKey, Double amount, String result, LocalDate date) {
         this.from = from;
         this.type = type;
         this.key = key;
         this.uniqueKey = uniqueKey;
         this.amount = amount;
         this.result = result;
+//        this.date = date;
     }
 
     @Override

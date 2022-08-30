@@ -10,7 +10,7 @@ const app = express();
 const port = process.env.SERVICE_PORT;
 
 
-mongoose.connect('mongodb://localhost/OrderService')
+mongoose.connect('mongodb://localhost/AllocationService')
     .then(() => console.log('Connected to MongoDB...'))
     .catch(err => console.log('Error connecting...', err));
 

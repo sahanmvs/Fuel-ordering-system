@@ -1,7 +1,8 @@
 export interface Dispatch {
-    key: string
-    uniqueKey: string
+    NIC: string
     amount: number
-    result: string
-    scheduledDate: string
+    uniqueKey: string
+    status: string
+    sheduledDate: string
+    time: string
 }

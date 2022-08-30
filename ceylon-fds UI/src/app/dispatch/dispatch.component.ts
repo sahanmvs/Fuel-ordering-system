@@ -34,7 +34,7 @@ export class DispatchComponent implements OnInit {
   }
 
   filterByNIC() {
-    this.filteredDispatches = this.dispatches.filter(dispatch => dispatch.key.includes(this._nicFilter));
+    this.filteredDispatches = this.dispatches.filter(dispatch => dispatch.NIC.includes(this._nicFilter));
   }
 
 }

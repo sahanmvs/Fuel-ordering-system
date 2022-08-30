@@ -24,7 +24,7 @@ const eventListner = async () => {
     await consumer.run({
         autoCommit: true,
         eachMessage: async ({ topic, partition, message }) => {
-            try {
+            try {   // .eachMessage failed rertries, because unexpected json-token error 
                 logger.debug(`new message : ${message.value.toString()}`);
 
                 const newMessage = JSON.parse(message.value.toString() || '{}');
@@ -46,7 +46,7 @@ const eventListner = async () => {
                                 key: newMessage.key,
                                 uniqueKey: newMessage.uniqueKey,
                                 amount: newMessage.amount,
-                                result: 'allocation success'
+                                result: 'allocation success',
                             })
                             .catch((e) => {
                                 throw new Error('error on publishing message', e);

@@ -32,15 +32,15 @@ app.get('/dispatches/:id', async (req, res) => {
     logger.debug("Get a dispatch api called...");
 });
 
-// app.get('/dispatches', async (req, res) => {
-//     const dispatches = await Dispatch
-//                         .find()
-//                         .select('-_id -__v');
+app.get('/dispatches', async (req, res) => {
+    const dispatches = await Dispatch
+                        .find()
+                        .select('-_id -__v');
 
-//     if(!dispatches) return res.status(404).send(`can't find dispatches`);
-//     res.send(dispatch);
-//     logger.debug("List dispatches api called...");
-// })
+    if(!dispatches) return res.status(404).send(`can't find dispatches`);
+    res.send(dispatches);
+    logger.debug("List dispatches api called...");
+})
 
 app.listen(port, () => {
     logger.info(`Order service running on port ${port}`);

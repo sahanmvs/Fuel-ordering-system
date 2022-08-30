@@ -3,5 +3,6 @@ export interface DispatchUpdate {
     amount: number
     uniqueKey: string
     status: string
+    scheduledDate: string
     time: string
 }

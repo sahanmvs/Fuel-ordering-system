@@ -23,7 +23,7 @@ export class HttpService {
   }
 
   getAllDispatches(): Observable<Dispatch[]> {
-    return this.http.get<Dispatch[]>(this.scheduledOrderUrl);
+    return this.http.get<Dispatch[]>(this.dispatchOrderUrl);
   }
 
   getDispatch(id: string): Observable<DispatchUpdate[]> {

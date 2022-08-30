@@ -28,11 +28,11 @@
                 </thead>
                 <tbody *ngFor="let dispatch of filteredDispatches">
                     <tr>
-                        <td>{{dispatch.key}}</td>
+                        <td>{{dispatch.NIC}}</td>
                         <td>{{dispatch.uniqueKey}}</td>
                         <td>{{dispatch.amount}}</td>
-                        <td>{{dispatch.result}}</td>
-                        <td>{{dispatch.scheduledDate}}</td>
+                        <td>{{dispatch.status}}</td>
+                        <td>{{dispatch.sheduledDate}}</td>
                         <td><a class="btn btn-success" 
                              routerLink="/dispatch/{{dispatch.uniqueKey}}">Dispatch</a></td>
                     </tr>

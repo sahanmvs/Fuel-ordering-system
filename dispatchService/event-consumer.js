@@ -23,34 +23,41 @@ const eventListner = async () => {
     await consumer.run({
         autoCommit: true,
         eachMessage: async({ topic, partition, message}) => {
-            logger.debug(`new message : ${message.value.toString()}`);
-
-            const newMessage = JSON.parse(message.value.toString() || '{}');
-
-            if(!(newMessage?.type === 'SCHEDULE_COMPLETE')) {
-                logger.info(
-                    `incoming message is not SCHEDULE_COMPLETE type. (${newMessage?.type}) skipped the process`
-                );
-                return;
-            }
-
-            let dispatch = new Dispatch({
-                NIC: newMessage.key,
-                uniqueKey: newMessage.uniqueKey,
-                amount: newMessage.amount,
-                status: newMessage.result,
-            })
-
-            dispatch = await dispatch.save();
-            logger.debug(`dispatch saved successfully: ${dispatch}`);
             
-            await consumer.commitOffsets([
-                {
-                    topic,
-                    partition,
-                    offset: (Number(message.offset) + 1).toString(),
-                },
-                ]);
+            try {
+                logger.debug(`new message : ${message.value.toString()}`);
+
+                const newMessage = JSON.parse(message.value.toString() || '{}');
+
+                if(!(newMessage?.type === 'SCHEDULE_COMPLETE')) {
+                    logger.info(
+                        `incoming message is not SCHEDULE_COMPLETE type. (${newMessage?.type}) skipped the process`
+                    );
+                    return;
+                }
+
+                let dispatch = new Dispatch({
+                    NIC: newMessage.key,
+                    uniqueKey: newMessage.uniqueKey,
+                    amount: newMessage.amount,
+                    status: newMessage.result,
+                    sheduledDate: newMessage.date
+                })
+
+                dispatch = await dispatch.save();
+                logger.debug(`dispatch saved successfully: ${dispatch}`);
+                
+                await consumer.commitOffsets([
+                    {
+                        topic,
+                        partition,
+                        offset: (Number(message.offset) + 1).toString(),
+                    },
+                    ]);
+                } catch (error) {
+                    console.log(error);
+                }
+            
         }
     });
 

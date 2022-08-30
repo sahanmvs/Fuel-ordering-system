@@ -27,6 +27,7 @@ export class OrdersComponent implements OnInit {
     this.orderService.getOrders().subscribe({
       next: data => {
         this.orders = data;
+        console.log(this.orders);
         this.filteredOrders = data;
       }
     })

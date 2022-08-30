@@ -47,6 +47,7 @@ app.get('/orders', async (req, res) => {
                     .find()
                     .select('-_id -__v');
     res.send(orders);
+    logger.debug(orders);
     logger.debug("Get all orders api called...");
 });
 

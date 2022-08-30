@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { DispatchUpdate } from '../dispatch-update/DispatchUpdate.model';
 import { Dispatch } from '../dispatch/Dispatch.model';
 import { Order } from '../orders/Orders.model';
 
@@ -25,8 +26,8 @@ export class HttpService {
     return this.http.get<Dispatch[]>(this.scheduledOrderUrl);
   }
 
-  getDispatch(id: string): Observable<Dispatch> {
-    return this.http.get<Dispatch>(`${this.dispatchOrderUrl}/${id}`);
+  getDispatch(id: string): Observable<DispatchUpdate[]> {
+    return this.http.get<DispatchUpdate[]>(`${this.dispatchOrderUrl}/${id}`);
   }
 
 }

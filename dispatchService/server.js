@@ -20,12 +20,27 @@ app.use(cors());
 app.use(json());
 
 app.get('/dispatches/:id', async (req, res) => {
-    const dispatch = await Dispatch.find({uniqueKey: req.params.id});
+    console.log(req.params.id);
+    const dispatch = await Dispatch
+                    .find({uniqueKey: req.params.id})
+                    .select('-_id -__v');
+                    
     if(!dispatch) return res.status(404).send(`can't find data with key: ${req.params.id}`);
 
     res.send(dispatch);
+    logger.debug(dispatch);
     logger.debug("Get a dispatch api called...");
 });
+
+// app.get('/dispatches', async (req, res) => {
+//     const dispatches = await Dispatch
+//                         .find()
+//                         .select('-_id -__v');
+
+//     if(!dispatches) return res.status(404).send(`can't find dispatches`);
+//     res.send(dispatch);
+//     logger.debug("List dispatches api called...");
+// })
 
 app.listen(port, () => {
     logger.info(`Order service running on port ${port}`);

@@ -41,7 +41,7 @@ export class DispatchUpdateComponent implements OnInit {
                                   amount: new FormControl(dispatch.amount),
                                   result: new FormControl(dispatch.status),
                                   scheduledDate: new FormControl(dispatch.scheduledDate),
-                                  dispatchedDate: new FormControl(dispatch.time)
+                                  dispatchedDate: new FormControl(dispatch.time || 'n/a')
                                 }) 
         }
       }

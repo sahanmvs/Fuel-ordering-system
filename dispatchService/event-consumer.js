@@ -41,7 +41,7 @@ const eventListner = async () => {
                     uniqueKey: newMessage.uniqueKey,
                     amount: newMessage.amount,
                     status: newMessage.result,
-                    sheduledDate: newMessage.date
+                    scheduledDate: newMessage.date
                 })
 
                 dispatch = await dispatch.save();

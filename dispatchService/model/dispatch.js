@@ -21,7 +21,7 @@ const Dispatch = mongoose.model('Dispatch', new mongoose.Schema({
         minlength: 3,
         maxlength: 255,
     },
-    sheduledDate: {
+    scheduledDate: {
         type: Date,
         required: true
     },

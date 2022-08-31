@@ -12,6 +12,7 @@ import { DispatchUpdate } from './DispatchUpdate.model';
 export class DispatchUpdateComponent implements OnInit {
 
   dispatch!: DispatchUpdate[];
+  alert: boolean = false;
 
   dispatchOrder = new FormGroup({
     key: new FormControl(''),
@@ -54,9 +55,13 @@ export class DispatchUpdateComponent implements OnInit {
       this.dispatchUpdate
           .dispatchOrder(this.router.snapshot.params['id'], this.dispatch[0])
           .subscribe((res) => {
-            window.location.href = 'dispatch';
-            window.alert('Order dipatched');
+            this.alert = true;  
           })
-  }     
+  }
+  
+  closeAlert() {
+    this.alert = false;
+    window.location.href = 'dispatch';
+  }
 
 }

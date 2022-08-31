@@ -11,7 +11,6 @@ import { Order } from '../orders/Orders.model';
 export class HttpService {
 
   private orderUrl: string = 'http://localhost:8191/orders';
-  //private scheduledOrderUrl: string = 'http://localhost:8192/schedule/orders';
   private dispatchOrderUrl: string = 'http://localhost:8193/dispatches'
 
   constructor(private http: HttpClient) { 

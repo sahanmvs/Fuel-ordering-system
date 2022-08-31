@@ -1,0 +1,48 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-9 align-self-center">
+            <div class="card">
+                <div class="card-header"><h4>Create Order</h4></div>
+                <div class="card-body">
+                    <form [formGroup]="order" (ngSubmit)="createOrder()">
+                        <div class="form-group">
+                          <label>NIC</label>
+                          <input type="text" formControlName="NIC" class="form-control col-sm-6" placeholder="Enter NIC">
+                        </div><br />
+                        <div *ngIf="NIC && NIC.invalid" class="alert alert-danger">
+                            <div *ngIf="NIC.errors?.['required']">
+                                NIC is required.
+                            </div>
+                            <div *ngIf="NIC.errors?.['minlength']">
+                                NIC must be at least 10 characters long.
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Amount</label>
+                            <input type="text" formControlName="amount" class="form-control col-sm-6" placeholder="Enter fuel-amount">
+                        </div><br />
+                        <div *ngIf="amount && amount.invalid" class="alert alert-danger">
+                            <div *ngIf="amount.errors?.['required']">
+                                Fuel amount is required.
+                            </div>                       
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                      </form>
+                      <br />
+
+                      <div *ngIf="alert" class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>Success!</strong> Please save the key <strong>{{uniqueKey.id}}</strong> before closing this window.
+                        <button (click)="closeAlert()" type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

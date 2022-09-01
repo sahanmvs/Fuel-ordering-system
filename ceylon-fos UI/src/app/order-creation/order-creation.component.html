@@ -9,23 +9,27 @@
                           <label>NIC</label>
                           <input type="text" formControlName="NIC" class="form-control col-sm-6" placeholder="Enter NIC">
                         </div><br />
-                        <div *ngIf="NIC && NIC.invalid" class="alert alert-danger">
-                            <div *ngIf="NIC.errors?.['required']">
-                                NIC is required.
-                            </div>
-                            <div *ngIf="NIC.errors?.['minlength']">
-                                NIC must be at least 10 characters long.
+                        <div *ngIf="NIC">
+                            <div *ngIf="NIC.touched && NIC.invalid" class="alert alert-danger">
+                                <div *ngIf="NIC.errors?.['required']">
+                                    NIC is required.
+                                </div>
+                                <div *ngIf="NIC.errors?.['minlength']">
+                                    NIC must be at least 10 characters long.
+                                </div>
                             </div>
                         </div>
-                        
+
                         <div class="form-group">
                             <label>Amount</label>
-                            <input type="text" formControlName="amount" class="form-control col-sm-6" placeholder="Enter fuel-amount">
+                            <input type="number" formControlName="amount" class="form-control col-sm-6" placeholder="Enter Fuel Litres">
                         </div><br />
-                        <div *ngIf="amount && amount.invalid" class="alert alert-danger">
-                            <div *ngIf="amount.errors?.['required']">
-                                Fuel amount is required.
-                            </div>                       
+                        <div *ngIf="amount">
+                            <div *ngIf="amount.touched && amount.invalid" class="alert alert-danger">
+                                <div *ngIf="amount.errors?.['required']">
+                                    Fuel amount is required.
+                                </div>                       
+                            </div>
                         </div>
 
                         <button type="submit" class="btn btn-primary">Submit</button>
@@ -37,7 +41,14 @@
                         <button (click)="closeAlert()" type="button" class="close" data-dismiss="alert" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                         </button>
-                    </div>
+                      </div>
+
+                      <div *ngIf="errAlert" class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Failed, {{errMessage.error}}</strong>
+                        <button (click)="closeErrAlert()" type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
 
                 </div>
             </div>

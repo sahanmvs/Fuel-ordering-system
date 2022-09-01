@@ -1,7 +1,7 @@
 import express, { json } from 'express';
 import dotenv from 'dotenv';
 import logger from './logger/logger.js';
-import { Order, validate, createOrder } from './models/order.js';
+import { Order, validate, validateOrderRequest, createOrder } from './models/order.js';
 import mongoose from 'mongoose';
 import eventListner from './event-consumer.js';
 import cors from 'cors'
@@ -18,6 +18,21 @@ eventListner().catch((e) => error('error on subscribing to topic'));
 
 app.use(cors());    // forgot (), wasted a day :)
 app.use(json());
+
+app.post('/orders/status', async (req, res) => {
+    const { error } = validateOrderRequest(req.body);
+    if(error) {
+        logger.error(`invalid request. uniqueKey: ${req.body.uniqueKey} NIC: ${req.body.NIC}`);
+        return res.status(400).send(error.details[0].message);
+    }
+
+    const order = await Order.findOne({uniqueKey: req.body.uniqueKey})
+    if(!order) return res.status(404).send("Enter a valid key");
+
+    if(req.body.NIC != order.NIC) return res.status(404).send("Key and NIC mismatch");
+
+    res.status(200).send(order);
+});
 
 app.post('/orders', async (req, res) => {
     const { error } = validate(req.body);
@@ -47,7 +62,7 @@ app.get('/orders', async (req, res) => {
                     .find()
                     .select('-_id -__v');
     res.send(orders);
-    logger.debug(orders);
+    //logger.debug(orders);
     logger.debug("Get all orders api called...");
 });
 

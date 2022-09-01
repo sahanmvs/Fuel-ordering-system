@@ -10,7 +10,9 @@ import { OrderCreationService } from './order-creation.service';
 export class OrderCreationComponent implements OnInit {
 
   alert: boolean = false;
-  uniqueKey: any 
+  errAlert: boolean = false;
+  uniqueKey: any
+  errMessage: any 
 
   order = new FormGroup({
     NIC: new FormControl('', [
@@ -30,16 +32,34 @@ export class OrderCreationComponent implements OnInit {
   createOrder() {
       //console.log(this.order.value);
     this.orderCreationService.createOrder(this.order.value)
-                .subscribe((res) => {
-                  console.log(res);
-                  this.uniqueKey = res;
-                  this.alert = true;
-                  this.order.reset();
-                });
+            .subscribe({
+              next: data => {
+                console.log(data);
+                this.uniqueKey = data;
+                this.alert = true;
+                this.order.reset();
+              },
+              error: err => {
+                console.log(err);
+                this.errMessage = err;
+                this.errAlert = true;
+                this.order.reset()   
+              }
+            })
+                // .subscribe((res) => {
+                //   console.log(res);
+                //   this.uniqueKey = res;
+                //   this.alert = true;
+                //   this.order.reset();
+                // });
   }
 
   closeAlert() {
     this.alert = false;
+  }
+
+  closeErrAlert() {
+    this.errAlert = false;
   }
 
   get NIC() { return this.order.get('NIC'); }

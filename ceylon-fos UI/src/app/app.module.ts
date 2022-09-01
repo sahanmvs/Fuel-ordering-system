@@ -8,12 +8,14 @@ import { HomeComponent } from './home/home.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpService } from './shared/http.service';
 import { HttpClientModule } from '@angular/common/http';
+import { OrderStatusComponent } from './order-status/order-status.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     OrderCreationComponent,
-    HomeComponent
+    HomeComponent,
+    OrderStatusComponent
   ],
   imports: [
     BrowserModule,

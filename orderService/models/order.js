@@ -39,6 +39,15 @@ function validateOrder(order) {
     return schema.validate(order);
 }
 
+function validateOrderRequest(order) {
+    const schema = Joi.object({
+        NIC: Joi.string().min(10).max(50).required(),
+        uniqueKey: Joi.string().required(),
+    });
+
+    return schema.validate(order);
+}
+
 async function createNewOrder(NIC, amount) {
     const uniqueKey = uuidv4();
     const event = {
@@ -55,4 +64,4 @@ async function createNewOrder(NIC, amount) {
     return uniqueKey;
 }
 
-export { Order, createNewOrder as createOrder, validateOrder as validate };
+export { Order, createNewOrder as createOrder, validateOrder as validate, validateOrderRequest };

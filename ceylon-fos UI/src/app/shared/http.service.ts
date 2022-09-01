@@ -7,10 +7,15 @@ import { Order } from '../order-creation/Order.model';
 })
 export class HttpService {
   private orderURL = 'http://localhost:8191/orders'
+  private orderStatusURL = 'http://localhost:8191/orders/status'
 
   constructor(private http: HttpClient) { }
 
   createOrder(data: any) {
     return this.http.post(this.orderURL, data);
+  }
+
+  checkStatus(data: any) {
+    return this.http.post(this.orderStatusURL, data);
   }
 }

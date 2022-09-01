@@ -1,55 +1,61 @@
-<div class="card">
-    <div class="card-header padding-start">
-        <h5>Order details</h5>
-    </div>
-
-    <div class="card-body">
-        <form [formGroup]="dispatchOrder" (ngSubmit)="dispatchAnOrder()">
-            <div class="form-group row">
-              <label class="col-sm-2 col-form-label">NIC</label>
-              <div class="col-sm-10">
-                <input type="text" readonly class="form-control-plaintext" formControlName="key">
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-9 align-self-center">
+      <div class="card">
+        <div class="card-header padding-start">
+            <h5>Order details</h5>
+        </div>
+    
+        <div class="card-body">
+            <form [formGroup]="dispatchOrder" (ngSubmit)="dispatchAnOrder()">
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">NIC</label>
+                  <div class="col-sm-10">
+                    <input type="text" readonly class="form-control-plaintext" formControlName="key">
+                  </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">uniqueKey</label>
+                    <div class="col-sm-10">
+                      <input type="text" readonly class="form-control-plaintext" formControlName="uniqueKey">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">amount</label>
+                    <div class="col-sm-10">
+                      <input type="text" readonly class="form-control-plaintext" formControlName="amount">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Status</label>
+                    <div class="col-sm-10">
+                      <input type="text" readonly class="form-control-plaintext" formControlName="result">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">scheduledDate</label>
+                    <div class="col-sm-10">
+                      <input type="text" readonly class="form-control-plaintext" formControlName="scheduledDate">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">dispatchedDate</label>
+                    <div class="col-sm-10">
+                      <input type="text" readonly class="form-control-plaintext" formControlName="dispatchedDate">
+                    </div>
+                </div><br />
+                <button type="submit" class="btn btn-primary">Dispatch</button>
+              </form><br />
+    
+              <div *ngIf="alert" class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Success!</strong> Order dispatch success.
+                <button (click)="closeAlert()" type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
               </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label">uniqueKey</label>
-                <div class="col-sm-10">
-                  <input type="text" readonly class="form-control-plaintext" formControlName="uniqueKey">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label">amount</label>
-                <div class="col-sm-10">
-                  <input type="text" readonly class="form-control-plaintext" formControlName="amount">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Status</label>
-                <div class="col-sm-10">
-                  <input type="text" readonly class="form-control-plaintext" formControlName="result">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label">scheduledDate</label>
-                <div class="col-sm-10">
-                  <input type="text" readonly class="form-control-plaintext" formControlName="scheduledDate">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label">dispatchedDate</label>
-                <div class="col-sm-10">
-                  <input type="text" readonly class="form-control-plaintext" formControlName="dispatchedDate">
-                </div>
-            </div><br />
-            <button type="submit" class="btn btn-primary">Dispatch</button>
-          </form><br />
-
-          <div *ngIf="alert" class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>Success!</strong> Order dispatch success.
-            <button (click)="closeAlert()" type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
+        </div>
+       
     </div>
-   
+    </div>
+  </div>
 </div>

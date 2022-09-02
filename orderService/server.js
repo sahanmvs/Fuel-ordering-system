@@ -34,6 +34,19 @@ app.post('/orders/status', async (req, res) => {
     res.status(200).send(order);
 });
 
+app.put('/orders/confirm', async (req, res) => {
+    console.log(req.body);
+    let order = await Order.findOne({uniqueKey: req.body.uniqueKey});
+    if(!order) return res.status(404).send("Can't find the order");
+
+    order.set({
+        status: "Order receive success",
+    });
+
+    order = await order.save();
+    res.send(order);
+});
+
 app.post('/orders', async (req, res) => {
     const { error } = validate(req.body);
     if(error) {

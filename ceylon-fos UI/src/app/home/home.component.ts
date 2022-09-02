@@ -17,4 +17,8 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['createOrder']);
   }
 
+  checkStatus() {
+    this.router.navigate(['checkStatus']);
+  }
+
 }

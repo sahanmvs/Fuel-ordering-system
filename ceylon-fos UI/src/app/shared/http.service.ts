@@ -8,6 +8,7 @@ import { Order } from '../order-creation/Order.model';
 export class HttpService {
   private orderURL = 'http://localhost:8191/orders'
   private orderStatusURL = 'http://localhost:8191/orders/status'
+  private orderConfirmURL = 'http://localhost:8191/orders/confirm'
 
   constructor(private http: HttpClient) { }
 
@@ -17,5 +18,9 @@ export class HttpService {
 
   checkStatus(data: any) {
     return this.http.post(this.orderStatusURL, data);
+  }
+
+  confirmOrder(data: Order) {
+    return this.http.put(this.orderConfirmURL, data);
   }
 }

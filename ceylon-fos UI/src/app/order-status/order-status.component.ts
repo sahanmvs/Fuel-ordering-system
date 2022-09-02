@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { OrderStatusService } from './order-status.service';
+import { Order } from './Order.Model';
 
 @Component({
   selector: 'fo-order-status',
@@ -13,6 +14,8 @@ export class OrderStatusComponent implements OnInit {
   errAlert: boolean = false;
   message: any
   errMessage: any
+  confirmAlert: boolean = false;
+  confirmErrAlert: boolean = false;
 
   order = new FormGroup({
     NIC: new FormControl('', [
@@ -62,6 +65,22 @@ export class OrderStatusComponent implements OnInit {
     })
   }
 
+  get NIC() { return this.order.get('NIC'); } // default validation getters
+  get uniqueKey() { return this.order.get('uniqueKey'); }
+
+  confirm(data: Order) {
+    this.orderStatusService.confirmOrder(data).subscribe({
+      next: data => {
+        console.log(data);
+        this.confirmAlert = true;
+      },
+      error: err => {
+        console.log(err);
+        this.confirmErrAlert = true;
+      }
+    })
+  }
+
   closeAlert() {
     this.alert = false;
   }
@@ -69,9 +88,12 @@ export class OrderStatusComponent implements OnInit {
   closeErrAlert() {
     this.errAlert = false;
   }
-
-  get NIC() { return this.order.get('NIC'); }
-
-  get uniqueKey() { return this.order.get('uniqueKey'); }
+  closeConfirmAlert() {
+    this.confirmAlert = false;
+    window.location.href = 'checkStatus';
+  }
+  closeConfirmErrAlert() {
+    this.confirmErrAlert = false; 
+  }
 
 }

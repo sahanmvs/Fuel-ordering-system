@@ -56,7 +56,10 @@ app.post('/orders', async (req, res) => {
 
     logger.debug( `new order request initiated for ${req.body.NIC}`);
     const uniqueKey = await createOrder(req.body.NIC, req.body.amount);
-    if(!uniqueKey) return res.status(404).send('no unique key');
+    if(!uniqueKey) {
+        logger.debug(`no unique key`);
+        return res.status(404).send('Server error');
+    } 
 
     let order = new Order({
         NIC: req.body.NIC,
@@ -67,7 +70,7 @@ app.post('/orders', async (req, res) => {
 
     order = await order.save();
 
-    res.status(200).send({id: uniqueKey});
+    res.status(200).send({id: uniqueKey}); 
 });
 
 app.get('/orders', async (req, res) => {

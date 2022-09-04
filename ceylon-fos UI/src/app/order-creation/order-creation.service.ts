@@ -12,4 +12,8 @@ export class OrderCreationService {
   createOrder(data: any) {
     return this.httpService.createOrder(data);
   }
+
+  checkStock(data: any) {
+    return this.httpService.checkStock(data);
+  }
 }

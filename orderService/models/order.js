@@ -64,4 +64,9 @@ async function createNewOrder(NIC, amount) {
     return uniqueKey;
 }
 
-export { Order, createNewOrder as createOrder, validateOrder as validate, validateOrderRequest };
+export { 
+    Order, 
+    createNewOrder as createOrder,
+    validateOrder as validate,
+    validateOrderRequest,
+ };

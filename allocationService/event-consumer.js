@@ -32,7 +32,7 @@ const eventListner = async () => {
                 logger.info(
                     `incoming message is not New Order type. (${newMessage?.type}) skipped the process`
                 );
-                return;
+                return; 
             }
 
             //business logic
@@ -51,7 +51,7 @@ const eventListner = async () => {
                     throw new Error('error on publishing message', e);
                 });
                 logger.debug('responded to message, out of stock');
-                return;
+                return;  // returning from function
             }
 
             stock.availableAmount = stock.availableAmount - newMessage.amount;

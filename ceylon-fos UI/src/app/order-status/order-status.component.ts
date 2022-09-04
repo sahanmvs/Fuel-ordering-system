@@ -60,7 +60,6 @@ export class OrderStatusComponent implements OnInit {
         console.log(err);
         this.errMessage = err;
         this.errAlert = true;
-        this.order.reset();
       }
     })
   }

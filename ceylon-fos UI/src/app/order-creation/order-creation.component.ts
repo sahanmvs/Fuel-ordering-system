@@ -12,7 +12,8 @@ export class OrderCreationComponent implements OnInit {
   alert: boolean = false;
   errAlert: boolean = false;
   uniqueKey: any
-  errMessage: any 
+  errMessage: any
+  stockErr: boolean = false; 
 
   order = new FormGroup({
     NIC: new FormControl('', [
@@ -30,7 +31,19 @@ export class OrderCreationComponent implements OnInit {
   }
 
   createOrder() {
-      //console.log(this.order.value);
+     //console.log(this.order.value);
+    this.orderCreationService.checkStock(this.order.value).subscribe({
+      next: data => {
+        console.log(data);
+      },
+      error: err => {
+        //console.log(err);
+        this.errMessage = err;
+        this.errAlert = true;
+        this.stockErr = true;
+      }
+    })
+     
     this.orderCreationService.createOrder(this.order.value)
             .subscribe({
               next: data => {
@@ -46,12 +59,6 @@ export class OrderCreationComponent implements OnInit {
                 this.order.reset()   
               }
             })
-                // .subscribe((res) => {
-                //   console.log(res);
-                //   this.uniqueKey = res;
-                //   this.alert = true;
-                //   this.order.reset();
-                // });
   }
 
   closeAlert() {

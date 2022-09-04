@@ -36,7 +36,7 @@
                       </form>
                       <br />
 
-                      <div *ngIf="alert" class="alert alert-warning alert-dismissible fade show" role="alert">
+                      <div *ngIf="alert && !stockErr" class="alert alert-warning alert-dismissible fade show" role="alert">
                         <strong>Success!</strong> Please save the key <strong>{{uniqueKey.id}}</strong> before closing this window.
                         <button (click)="closeAlert()" type="button" class="close" data-dismiss="alert" aria-label="Close">
                           <span aria-hidden="true">&times;</span>

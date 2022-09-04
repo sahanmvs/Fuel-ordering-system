@@ -9,6 +9,7 @@ export class HttpService {
   private orderURL = 'http://localhost:8191/orders'
   private orderStatusURL = 'http://localhost:8191/orders/status'
   private orderConfirmURL = 'http://localhost:8191/orders/confirm'
+  private allocationURL = 'http://localhost:3000/allocation/stock'
 
   constructor(private http: HttpClient) { }
 
@@ -22,5 +23,9 @@ export class HttpService {
 
   confirmOrder(data: Order) {
     return this.http.put(this.orderConfirmURL, data);
+  }
+
+  checkStock(data: Order) {
+    return this.http.post(this.allocationURL, data);
   }
 }
